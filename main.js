@@ -1,3 +1,10 @@
+//データベースの接続と初期をインポート
+const initializeApp = require('./services/initializeapp');
+// 登録処理をインポート
+const setupIpcHandlers = require('./handlers/handlers')
+
+
+
 const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
 
