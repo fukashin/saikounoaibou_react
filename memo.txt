@@ -1,0 +1,5 @@
+
+ # Reactの開発サーバー起動
+ # Electronアプリケーションの起動
+npm start 
+npm run electron  
