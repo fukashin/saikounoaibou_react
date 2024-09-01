@@ -5,7 +5,7 @@
   display: flex; /* Flexboxレイアウトを使用します */
   flex-direction: column; /* Flexboxの方向を縦方向（列）に設定します */
   /* justify-content: center; コンテンツを垂直方向に中央揃えにします */
-  align-items: center; /* コンテンツを水平方向に中央揃えにします */
+  /* align-items: center; コンテンツを水平方向に中央揃えにします */
 }
 
 

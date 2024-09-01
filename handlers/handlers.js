@@ -16,6 +16,9 @@ const addKeyword = require('../services/touroku');
 // レコードを削除するための関数を外部ファイルからインポート
 const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords} = require('../services/sakujo');
 
+// レコードを取得するための関数を外部ファイルからインポート
+const {getKeywords,getActivity} = require('../services/syutoku')
+
 // IPCハンドラーを設定する関数
 function setupIpcHandlers() {
 
@@ -73,7 +76,30 @@ function setupIpcHandlers() {
               event.reply('delete-error', `Failed to delete all records: ${error.message}`);
           }
       });
+
+    //   IPCハンドラーを設定
+    ipcMain.on('get-keywords', async (event) => {
+        try {
+            const keywords = await getKeywords(); // キーワードを取得
+            console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(keywords)); // デバッグ用にシリアライズされたデータを表示
+            event.reply('keywords-list', JSON.parse(JSON.stringify(keywords))); // キーワードリストをレンダラープロセスに送信
+        } catch (error) {
+    event.reply('keywords-error', 'Failed to fetch keywords'); // エラーを送信
+    }
+  });
+
+
+  // IPCハンドラーを設定
+    ipcMain.on('get-Activity', async (event) => {
+        try {
+            const Activity = await getActivity(); // キーワードを取得
+            event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
+        } catch (error) {
+    event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
+});
+}
+
 
 // 他のファイルからこの関数を呼び出せるようにエクスポート
 module.exports = setupIpcHandlers;

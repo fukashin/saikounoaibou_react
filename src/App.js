@@ -2,29 +2,23 @@ import logo from './logo.svg';
 import './App.css';
 import Menu from './gamen/menu';  // Menuコンポーネントをインポート
 import KeywordForm from './gamen/textbox';  // KeywordFormコンポーネントをインポート
+import KeywordList from './gamen/hyouzi_Keywords';
+import ActivitydList from './gamen/hyouzi_Activity';
 import React, { useEffect } from 'react';  // ReactとuseEffectフックをインポート
 
 // Appコンポーネントの定義
 function App() {
   // useEffectフックを使用して、副作用的な処理を行う
   useEffect(() => {
-    // 'keyword-added' イベントをリスン（監視）して、キーワードが追加されたときに実行する処理を設定
-    window.electron.ipcRenderer.on('keyword-added', (event, status) => {
-      // statusというIDを持つHTML要素を取得
-      const statusElement = document.getElementById('status');
-      if (statusElement) {
-        // その要素に追加されたキーワードの状態を表示
-        statusElement.textContent = status;
-      }
-    });
+    
 
     // 'delete-success' イベントをリスンして、削除が成功したときにアラートを表示
-    window.electron.ipcRenderer.on('delete-success', (event, message) => {
-      alert(message || "すべて消えた");
+    window.electron.ipcRenderer.on('delete-success', (message) => {
+      alert(message );
     });
 
     // 'delete-error' イベントをリスンして、削除が失敗したときにエラーメッセージを表示
-    window.electron.ipcRenderer.on('delete-error', (event, message) => {
+    window.electron.ipcRenderer.on('delete-error', (message) => {
       alert(`Error: ${message}`);
     });
 
@@ -51,6 +45,9 @@ function App() {
         {/* KeywordFormコンポーネントを表示 */}
         <KeywordForm />
         {/* キーワードの追加結果を表示するための要素 */}
+
+        <KeywordList />
+        <ActivitydList />
         <div id="status"></div>
       </div>
     </div>

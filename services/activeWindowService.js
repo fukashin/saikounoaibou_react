@@ -29,7 +29,7 @@ function startActiveWindowMonitoring() {
 
         // アクティブなウィンドウの名前を取得、もし取得できなければ'Unknown'とする
         let windowName = result.windowName || 'Unknown';
-        console.error(windowName);
+        // console.error(windowName);
 
         // ウィンドウ名を加工 (データベースのワードに基づいて)
         windowName = await extractWindowName(windowName);
@@ -57,18 +57,18 @@ function startActiveWindowMonitoring() {
         }
 
         // アクティブウィンドウとアクティブ時間をコンソールに表示
-        console.log(`Active window title: ${windowName}`);
+        // console.log(`Active window title: ${windowName}`);
         const activity = await Activity.findOne({ where: { windowName } });
-        console.log(`Active time: ${activity.activeTime} ms`);
+        // console.log(`Active time: ${activity.activeTime} ms`);
       } else {
         // アクティブなウィンドウが見つからない場合のメッセージ
-        console.log('No active window found');
+        // console.log('No active window found');
       }
     } catch (err) {
       // エラーが発生した場合のエラーメッセージ
-      console.error('Error getting active window:', err);
+      // console.error('Error getting active window:', err);
     }
-  }, 10000);
+  }, 100000);
 }
 
 // ウィンドウ名を加工する関数
