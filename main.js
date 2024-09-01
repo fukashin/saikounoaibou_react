@@ -35,4 +35,4 @@ app.on('activate', function () {
 
 
 // IPCハンドラーの設定
-setupIpcHandlers();
+setupIpcHandlers();//これは必要っぽい
