@@ -1,5 +1,17 @@
 .App {
-  text-align: center;
+  text-align: center; /* テキストやコンテンツを中央揃えにします */
+  background-color: #282c34; /* 背景色を#282c34に設定します（ダークグレー） */
+  min-height: 100vh; /* ビューポートの高さ全体をカバーするように最小高さを100%に設定します */
+  display: flex; /* Flexboxレイアウトを使用します */
+  flex-direction: column; /* Flexboxの方向を縦方向（列）に設定します */
+  /* justify-content: center; コンテンツを垂直方向に中央揃えにします */
+  align-items: center; /* コンテンツを水平方向に中央揃えにします */
+}
+
+
+.App-content {
+  width: 100%;
+  color: white;
 }
 
 .App-logo {
@@ -13,15 +25,16 @@
   }
 }
 
+.body{
+  height: 60vmin;
+}
+
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: relative ;
+  top: 10; /* ロゴを上に配置 */
 }
 
 .App-link {

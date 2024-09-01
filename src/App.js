@@ -44,15 +44,18 @@ function App() {
       <header className="App-header">
         {/* ロゴ画像を表示 */}
         <img src={logo} className="App-logo" alt="logo" />
+      </header>
+      <div className="App-content">
         {/* Menuコンポーネントを表示 */}
         <Menu />
         {/* KeywordFormコンポーネントを表示 */}
         <KeywordForm />
         {/* キーワードの追加結果を表示するための要素 */}
         <div id="status"></div>
-      </header>
+      </div>
     </div>
   );
+  
 }
 
 // Appコンポーネントをエクスポート

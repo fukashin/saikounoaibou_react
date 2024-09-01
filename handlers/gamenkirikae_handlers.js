@@ -21,7 +21,7 @@ function createWindow() {
   
     let mainWindow = new BrowserWindow({
       width: 800,
-      height: 600,
+      height: 1200,
       x: x, // 計算されたX座標を設定
       y: y, // 計算されたY座標を設定
       webPreferences: {
