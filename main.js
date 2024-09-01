@@ -1,13 +1,17 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
 
-// ホットリロードの設定
-require('electron-reload')(__dirname, {
-  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+// ホットリロードの設定ここから
+const path = require('path');
+require('electron-reload')(path.join(__dirname, './src'), {
+  // Electronの実行ファイルのパスを明示的に指定
+  electron: path.join(__dirname, './node_modules/electron/dist/electron.exe'),
+  ignored: /node_modules|[/\\]\./
 });
 
+// ホットリロードの設定ここまで
+
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  let mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
