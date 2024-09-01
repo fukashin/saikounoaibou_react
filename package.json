@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "electron": "^32.0.1"
+    "electron": "^32.0.1",
+    "electron-reload": "^2.0.0-alpha.1"
   }
 }
