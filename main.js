@@ -11,9 +11,8 @@ const { app, BrowserWindow} = require('electron');
 const path = require('path');
 
 // ホットリロードの設定ここから
-require('electron-reload')(path.join(__dirname, './src','./handlers'), {
+require('electron-reload')(__dirname, {
   electron: path.join(__dirname, './node_modules/electron/dist/electron.exe'),
-  ignored: /node_modules|[/\\]\./
 });
 // ホットリロードの設定ここまで
 

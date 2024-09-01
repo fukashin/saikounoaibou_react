@@ -2,8 +2,14 @@ import React from 'react';
 
 function Menu() {
   const handleClick = (action) => {
-    console.log(`${action} ボタンがクリックされました`);
-    window.electron.ipcRenderer.send(action);
+    if (action === 'delete-all-keyword-records' || action == 'delete-all-records') {
+      const userConfirmed = window.confirm("全部消えるけど、ほんとに削除する?");
+      if (userConfirmed) {
+        window.electron.ipcRenderer.send(action);
+      }
+    } else {
+      window.electron.ipcRenderer.send(action);
+    }
   };
 
   return (
