@@ -33,11 +33,13 @@ function ActivityList() {
   return (
     <div>
       <h2>アクティビティリスト</h2>
+      
       <ul>
         {activities.map((activity, index) => (
           <li key={index}>
             <strong>ID:</strong> {activity.id}<br />
             <strong>ウィンドウ名:</strong> {activity.windowName}<br />
+            <strong>経過時間:</strong> {activity.activeTime}<br />
             <strong>新規作成の時間:</strong> {new Date(activity.createdAt).toLocaleString()}<br />
             <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br />
           </li>

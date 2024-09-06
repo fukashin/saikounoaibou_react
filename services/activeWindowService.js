@@ -59,7 +59,7 @@ function startActiveWindowMonitoring() {
         // アクティブウィンドウとアクティブ時間をコンソールに表示
         // console.log(`Active window title: ${windowName}`);
         const activity = await Activity.findOne({ where: { windowName } });
-        // console.log(`Active time: ${activity.activeTime} ms`);
+        //  console.log(`Active time: ${activity.activeTime} ms`);
       } else {
         // アクティブなウィンドウが見つからない場合のメッセージ
         // console.log('No active window found');
@@ -68,7 +68,7 @@ function startActiveWindowMonitoring() {
       // エラーが発生した場合のエラーメッセージ
       // console.error('Error getting active window:', err);
     }
-  }, 100000);
+  }, 1000);
 }
 
 // ウィンドウ名を加工する関数

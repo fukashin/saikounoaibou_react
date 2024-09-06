@@ -93,6 +93,7 @@ function setupIpcHandlers() {
     ipcMain.on('get-Activity', async (event) => {
         try {
             const Activity = await getActivity(); // キーワードを取得
+            console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
             event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
         } catch (error) {
     event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信

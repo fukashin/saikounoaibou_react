@@ -33,21 +33,16 @@ function KeywordList() {
     };
   }, []);
 
-  const handleClick = (action) => {
-    if (action === 'delete-all-keyword-records' || action === 'delete-all-records') {
-      const userConfirmed = window.confirm("全部消えるけど、ほんとに削除する?");
-      if (userConfirmed) {
-        window.electron.ipcRenderer.send(action);
-      }
-    } else {
-      window.electron.ipcRenderer.send(action);
-    }
-  };
+  const handleClick = (action1, action2,event) => {
+    event.preventDefault();  // デフォルトのアンカー動作を阻止
+    window.electron.ipcRenderer.send(action1);
+    window.electron.ipcRenderer.send(action2);  // Activityリストの更新を要求
+};
 
   return (
     <div>
       <h2>キーワードリスト</h2>
-      <a href="#" id="test-message" className="btn btn-flat" onClick={() => handleClick('get-keywords','get-Activity')}>
+      <a href="#" className="btn btn-flat" onClick={(e) => handleClick('get-keywords','get-Activity', e)}>
         <span>更新</span>
       </a>
       <ul>
