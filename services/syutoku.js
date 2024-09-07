@@ -44,7 +44,7 @@ function formatTime(milliseconds) {
   const hours = Math.floor(totalSeconds / 3600);  // 時間を計算
   const minutes = Math.floor((totalSeconds % 3600) / 60);  // 分を計算
 
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  return `${String(hours).padStart(2, '0')}時間${String(minutes).padStart(2, '0')}分`;
 }
 
 
