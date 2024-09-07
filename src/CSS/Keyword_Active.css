@@ -1,0 +1,28 @@
+ul, ol {
+  padding: 0;
+}
+
+
+ul li {
+  position: relative;
+  list-style-type: none!important;/*ポチ消す*/
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  line-height: 1.5;
+  background: #6599c4;
+  vertical-align: middle;
+  color: #505050;
+  border-radius: 40px 0px 0px 40px;/*左側の角丸く*/
+}
+
+ul li:before{ 
+  display:inline-block; 
+  vertical-align: middle;
+  /*以下白丸つくる*/
+  content:'';
+  width:1em;
+  height: 1em;
+  border-radius: 80%;
+  margin-right: 8px;
+}

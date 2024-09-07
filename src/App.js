@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './CSS/App.css';
 import Menu from './gamen/menu';  // Menuコンポーネントをインポート
 import KeywordForm from './gamen/textbox';  // KeywordFormコンポーネントをインポート
 import KeywordList from './gamen/hyouzi_Keywords';
@@ -8,7 +8,7 @@ import React, { useEffect ,useState } from 'react';  // ReactとuseEffectフッ�
 
 // Appコンポーネントの定義
 function App() {
-  const [activeView, setActiveView] = useState(''); // 表示内容の状態を管理
+  const [activeView, setActiveView] = useState('activity'); // 表示内容の状態を管理
 
   const handleViewChange = (view) => {
     setActiveView(view); // 表示するコンポーネントを変更

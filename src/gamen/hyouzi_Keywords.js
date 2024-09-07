@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../CSS/Keyword_Active.css'
 
 function KeywordList() {
   // キーワードの状態を管理。初期値は空の配列。
