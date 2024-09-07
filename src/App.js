@@ -4,14 +4,23 @@ import Menu from './gamen/menu';  // Menuコンポーネントをインポート
 import KeywordForm from './gamen/textbox';  // KeywordFormコンポーネントをインポート
 import KeywordList from './gamen/hyouzi_Keywords';
 import ActivitydList from './gamen/hyouzi_Activity';
-import React, { useEffect } from 'react';  // ReactとuseEffectフックをインポート
+import React, { useEffect ,useState } from 'react';  // ReactとuseEffectフックをインポート
 
 // Appコンポーネントの定義
 function App() {
+  const [activeView, setActiveView] = useState(''); // 表示内容の状態を管理
+
+  const handleViewChange = (view) => {
+    setActiveView(view); // 表示するコンポーネントを変更
+    if (view === 'activity') {
+      window.electron.ipcRenderer.send('get-Activity'); // 'get-Activity' イベントを送信
+    }
+  };
+
+
+
   // useEffectフックを使用して、副作用的な処理を行う
   useEffect(() => {
-    
-
     // 'delete-success' イベントをリスンして、削除が成功したときにアラートを表示
     window.electron.ipcRenderer.on('delete-success', (message) => {
       alert(message );
@@ -41,13 +50,12 @@ function App() {
       </header>
       <div className="App-content">
         {/* Menuコンポーネントを表示 */}
-        <Menu />
+        <Menu onViewChange={handleViewChange} /> {/* Menuに関数を渡す */}
         {/* KeywordFormコンポーネントを表示 */}
         <KeywordForm />
-        {/* キーワードの追加結果を表示するための要素 */}
-
-        <KeywordList />
-        <ActivitydList />
+        {/* フラグに基づいて表示するコンポーネントを切り替え */}
+        {activeView === 'activity' && <ActivitydList />}
+        {activeView === 'keyword' && <KeywordList />}
         <div id="status"></div>
       </div>
     </div>
