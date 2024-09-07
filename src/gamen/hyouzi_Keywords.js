@@ -7,7 +7,7 @@ function KeywordList() {
   useEffect(() => {
     // メインプロセスからキーワードリストを取得
     window.electron.ipcRenderer.send('get-keywords');
-    console.log('window.electron:', window.electron);
+    // console.log('window.electron:', window.electron);
 
     // キーワードリストを受け取る
 // キーワードリストを受け取る
@@ -33,18 +33,12 @@ function KeywordList() {
     };
   }, []);
 
-  const handleClick = (action1, action2,event) => {
-    event.preventDefault();  // デフォルトのアンカー動作を阻止
-    window.electron.ipcRenderer.send(action1);
-    window.electron.ipcRenderer.send(action2);  // Activityリストの更新を要求
-};
+
 
   return (
     <div>
       <h2>キーワードリスト</h2>
-      <a href="#" className="btn btn-flat" onClick={(e) => handleClick('get-keywords','get-Activity', e)}>
-        <span>更新</span>
-      </a>
+
       <ul>
         {keywords.length > 0 ? (
           keywords.map((keyword, index) => (

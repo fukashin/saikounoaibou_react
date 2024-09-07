@@ -16,22 +16,49 @@ function Menu({ onViewChange }) {
     }
   };
 
+  const handleClick_futatu = (action1, action2,event) => {
+    event.preventDefault();  // デフォルトのアンカー動作を阻止
+    window.electron.ipcRenderer.send(action1);
+    window.electron.ipcRenderer.send(action2);  // Activityリストの更新を要求
+};
+
   return (
     <div id="menu">
-      <a href="#" id="メインメニューボタン" className="btn btn-flat" onClick={() => handleClick('メインメニュー画面に遷移')}>
+      <a href="#"
+       id="メインメニューボタン"
+      className="btn btn-flat" 
+      onClick={() => handleClick('メインメニュー画面に遷移')}>
         <span>メインメニュー</span>
       </a>
-      <a href="#" id="アクティブ表示ボタン" className="btn btn-flat" onClick={() => handleClick('get-Activity')}>
+      <a href="#"
+       id="アクティブ表示ボタン"
+      className="btn btn-flat" 
+      onClick={() => handleClick('get-Activity')}>
         <span>アクティブ表示ボタン</span>
       </a>
-      <a href="#" id="キーワード表示ボタン" className="btn btn-flat" onClick={() => handleClick('get-keywords')}>
+      <a href="#"
+       id="キーワード表示ボタン"
+      className="btn btn-flat" 
+      onClick={() => handleClick('get-keywords')}>
         <span>キーワード表示ボタン</span>
       </a>
-      <a href="#" id="全アクティブ削除ボタン" className="btn btn-flat" onClick={() => handleClick('delete-all-records')}>
+      <a href="#"
+       id="全アクティブ削除ボタン"
+      className="btn btn-flat" 
+      onClick={() => handleClick('delete-all-records')}>
         <span>アクティブをすべて削除</span>
       </a>
-      <a href="#" id="全キーワード削除ボタン" className="btn btn-flat" onClick={() => handleClick('delete-all-keyword-records')}>
+      <a href="#"
+       id="全キーワード削除ボタン"
+      className="btn btn-flat" 
+      onClick={() => handleClick('delete-all-keyword-records')}>
         <span>全キーワードをすべて削除</span>
+      </a>
+      <a href="#"
+       className="btn btn-flat" 
+      //  画面の更新を避けるためのeを送信している
+       onClick={(e) => handleClick_futatu('get-keywords','get-Activity', e)}>
+        <span>更新</span>
       </a>
     </div>
   );
