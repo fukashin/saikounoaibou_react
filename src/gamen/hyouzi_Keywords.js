@@ -44,10 +44,18 @@ function KeywordList() {
         {keywords.length > 0 ? (
           keywords.map((keyword, index) => (
             <li key={index}>
+            <div>
             <strong>ID:</strong> {keyword.id}<br />
+            </div>
+            <div>
             <strong>Word:</strong> {keyword.word}<br />
+            <div>
+            </div>
             <strong>Created At:</strong> {new Date(keyword.createdAt).toLocaleString()}<br />
+            <div>
+            </div>
             <strong>Updated At:</strong> {new Date(keyword.updatedAt).toLocaleString()}<br />
+            </div>
           </li>
           ))
         ) : (
