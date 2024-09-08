@@ -33,8 +33,6 @@ function App() {
 
     // コンポーネントがアンマウントされる際に実行されるクリーンアップ処理
     return () => {
-      // 'keyword-added' イベントリスナーを削除
-      window.electron.ipcRenderer.removeAllListeners('keyword-added');
       // 'delete-success' イベントリスナーを削除
       window.electron.ipcRenderer.removeAllListeners('delete-success');
       // 'delete-error' イベントリスナーを削除

@@ -24,17 +24,27 @@ function setupIpcHandlers() {
 
     // キーワード追加のIPCリスナー
     // レンダラープロセスから 'add-keyword' イベントが送信された時に実行される
+    
+    // キーワード追加のIPCリスナー
     ipcMain.on('add-keyword', async (event, keyword) => {
         try {
-            // キーワードを追加する関数を呼び出し
-            await addKeyword(keyword);
-            // 成功した場合、レンダラープロセスに結果を返信
-            event.reply('keyword-added', `Keyword "${keyword}" added successfully!`);
+            // キーワードを追加する関数を呼び出し、結果を取得
+            const result = await addKeyword(keyword);
+    
+            // すでに登録されている場合も含めて結果を処理
+            if (result === "すでに登録されているキーワードです") {
+                // キーワードが既に存在する場合のメッセージを送信
+                event.reply('add-error', result);
+            } else {
+                // 成功した場合のメッセージを送信
+                event.reply('add-success', result);
+            }
         } catch (error) {
-            // 失敗した場合、エラーメッセージをレンダラープロセスに返信
-            event.reply('keyword-added', `Failed to add keyword: ${error.message}`);
+            // 失敗した場合のエラーメッセージを送信
+            event.reply('add-error', `キーワードの追加に失敗しました: ${error.message}`);
         }
     });
+    
 
     // レコード削除のIPCハンドラー
     // レンダラープロセスから 'delete-record' イベントが送信された時に実行される

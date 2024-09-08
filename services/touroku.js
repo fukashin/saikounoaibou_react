@@ -9,16 +9,18 @@ async function addKeyword(word) {
     // 既にキーワードが存在しないか確認
     const existingKeyword = await Keyword.findOne({ where: { word } });
     if (existingKeyword) {
-      console.log('キーワードは既に存在しています:', word);
-      return;
+      let message = "すでに登録されているキーワードです"
+      return(message);
     }
 
     // キーワードをデータベースに追加
     await Keyword.create({ word });
-    console.log('新しいキーワードが追加されました:', word);
+    message = `${word}の追加しました`
+
 
     // キーワードに関連するアクティビティを統合
     await mergeActivitiesWithKeyword(word);
+    return(message);
   } catch (error) {
     console.error('キーワード追加中にエラーが発生しました:', error);
   }
