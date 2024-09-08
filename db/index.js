@@ -1,11 +1,12 @@
-// pstgresSQLとの接続設定を記述しているｊｓ
+// SQliteとの接続設定を記述しているｊｓ
 
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('Database1', 'fuk1', 'fuk1', {
-  host: 'localhost',
-  port: 5432,
-  dialect: 'postgres'
+// SQLiteとの接続設定
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite' // SQLiteファイルのパス
 });
 
 module.exports = sequelize;
+
