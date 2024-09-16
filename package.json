@@ -1,13 +1,17 @@
 {
   "name": "saikounoaibou",
   "version": "0.1.0",
-  "main": "main.js",
+  "description": "React to Electron conversion project",
+  "author": "Your Name",
+  "main": "public/electron.js",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "electron-active-window": "^0.0.6",
+    "electron-is-dev": "^3.0.1",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "react": "^18.3.1",
@@ -22,7 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "dist": "npm run build && electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +48,58 @@
     ]
   },
   "devDependencies": {
-    "electron": "^32.0.1",
+    "electron": "^25.0.0",
+    "electron-builder": "^25.0.5",
+    "electron-packager": "^17.1.2",
+    "electron-rebuild": "^3.2.9",
     "electron-reload": "^2.0.0-alpha.1"
+  },
+  "build": {
+    "appId": "com.your-app.id",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/",
+        "to": "node_modules/",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "build/",
+        "to": "build/",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "resources/services",
+        "to": "services/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "resources/handlers/",
+        "to": "handlers/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "resources/db/",
+        "to": "db/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "npmRebuild": true
   }
 }

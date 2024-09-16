@@ -1,0 +1,6 @@
+2024-09-15T15:39:39.859Z - createWindow start
+2024-09-15T15:39:39.861Z - isDev: true
+2024-09-15T15:39:39.861Z - Number of displays: 2
+2024-09-15T15:39:39.861Z - External display found, setting x: 3040, y: 0
+2024-09-15T15:39:39.916Z - BrowserWindow created
+2024-09-15T15:39:39.917Z - Loading URL: http://localhost:3000

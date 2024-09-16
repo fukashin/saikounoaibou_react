@@ -11,13 +11,13 @@
 const { ipcMain } = require('electron');
 
 // キーワードを追加するための関数を外部ファイルからインポート
-const addKeyword = require('../../services/touroku');
+const addKeyword = require('../services/touroku');
 
 // レコードを削除するための関数を外部ファイルからインポート
-const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords} = require('../../services/sakujo');
+const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords} = require('../services/sakujo');
 
 // レコードを取得するための関数を外部ファイルからインポート
-const {getKeywords,getActivity} = require('../../services/syutoku')
+const {getKeywords,getActivity} = require('../services/syutoku')
 
 // IPCハンドラーを設定する関数
 function setupIpcHandlers() {
