@@ -14,7 +14,7 @@ const { ipcMain } = require('electron');
 const addKeyword = require('../services/touroku');
 
 // レコードを削除するための関数を外部ファイルからインポート
-const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords} = require('../services/sakujo');
+const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords,deleteRecordById_Keyword} = require('../services/sakujo');
 
 // レコードを取得するための関数を外部ファイルからインポート
 const {getKeywords,getActivity} = require('../services/syutoku')
@@ -46,12 +46,25 @@ function setupIpcHandlers() {
     });
     
 
-    // レコード削除のIPCハンドラー
+    // アクティビティー削除のIPCハンドラー
     // レンダラープロセスから 'delete-record' イベントが送信された時に実行される
-    ipcMain.on('delete-record', async (event, id) => {
+    ipcMain.on('delete-Activity', async (event, id) => {
         try {
             // 指定されたIDのレコードを削除する関数を呼び出し
             await deleteRecordById(id);
+            // 成功した場合、レンダラープロセスに結果を返信　replyはほぼsendと同じ扱いらしい
+            event.reply('delete-success', `Record with id ${id} was deleted.`);
+        } catch (error) {
+            // 失敗した場合、エラーメッセージをレンダラープロセスに返信
+            event.reply('delete-error', `Failed to delete record: ${error.message}`);
+        }
+    });
+
+    // レンダラープロセスから 'delete-record' イベントが送信された時に実行される
+    ipcMain.on('delete-Keyword', async (event, id) => {
+        try {
+            // 指定されたIDのレコードを削除する関数を呼び出し
+            await deleteRecordById_Keyword(id);
             // 成功した場合、レンダラープロセスに結果を返信　replyはほぼsendと同じ扱いらしい
             event.reply('delete-success', `Record with id ${id} was deleted.`);
         } catch (error) {

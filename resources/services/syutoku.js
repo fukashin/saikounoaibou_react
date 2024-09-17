@@ -18,7 +18,7 @@ async function getActivity() {
   try {
     // データベースからすべてのアクティブを取得
     const activities = await Activity.findAll({
-      order: [['updatedAt', 'DESC']]  // 更新日時でソート
+      order: [['activeTime', 'DESC']]  // 更新日時でソート
     });
 
     // 取得したデータをフォーマット

@@ -34,6 +34,18 @@ function KeywordList() {
     };
   }, []);
 
+  const handleDelete = (id,event) => {
+    event.preventDefault(); // デフォルトの動作を抑えて画面移動を防ぐ
+    // アクティビティ削除のリクエストをメインプロセスに送る
+    const userConfirmed = window.confirm("削除する?");
+    if (userConfirmed) {
+      window.electron.ipcRenderer.send('delete-Keyword', id);
+    }
+    window.electron.ipcRenderer.send('get-keywords');
+    window.electron.ipcRenderer.send('get-Activity');
+    
+  };
+
 
 
   return (
@@ -43,7 +55,7 @@ function KeywordList() {
       <ul>
         {keywords.length > 0 ? (
           keywords.map((keyword, index) => (
-            <li key={index}>
+            <li key={index} onClick={(e) => handleDelete(keyword.id,e)}>
             <div>
             <strong>ID:</strong> {keyword.id}<br />
             </div>

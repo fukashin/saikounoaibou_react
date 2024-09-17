@@ -27,6 +27,24 @@ async function deleteRecordById(id) {
   }
 }
 
+async function deleteRecordById_Keyword(id) {
+  try {
+    // レコードを削除します
+    const deleted = await Keyword.destroy({
+      where: { id: id }
+    });
+
+    // 削除が成功したか確認
+    if (deleted) {
+      console.log(`Record with id ${id} was deleted.`);
+    } else {
+      console.log(`Record with id ${id} was not found.`);
+    }
+  } catch (error) {
+    console.error('Error deleting record:', error);
+  }
+}
+
 // 全部をさくじょ
 async function deleteAllRecords() {
     try {
@@ -58,4 +76,4 @@ async function deleteAllkeywordRecords() {
   }
 }
 
-module.exports = {deleteRecordById,deleteAllRecords,deleteAllkeywordRecords};
+module.exports = {deleteRecordById,deleteAllRecords,deleteAllkeywordRecords,deleteRecordById_Keyword};

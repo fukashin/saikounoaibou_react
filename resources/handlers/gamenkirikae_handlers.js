@@ -4,21 +4,15 @@ const fs = require('fs');
 let mainWindow = null;
 
 // ログ出力用の関数
-function logMessage(message) {
-  const logPath = path.join(__dirname, 'log.txt');
-  fs.appendFileSync(logPath, `${new Date().toISOString()} - ${message}\n`);
-}
+
 
 async function createWindow() {
-  logMessage('createWindow start');
   
   // 動的に electron-is-dev をインポート
   const { default: isDev } = await import('electron-is-dev');
-  logMessage(`isDev: ${isDev}`);
 
   // すべてのディスプレイの情報を取得
   const displays = screen.getAllDisplays();
-  logMessage(`Number of displays: ${displays.length}`);
   
   // サブディスプレイの右上に表示するためのディスプレイを選択
   const externalDisplay = displays.find((display) => display.bounds.x !== 0 || display.bounds.y !== 0);
@@ -28,9 +22,9 @@ async function createWindow() {
     // サブディスプレイの右上の座標を計算
     x = externalDisplay.bounds.x + externalDisplay.bounds.width - 800; // ウィンドウ幅を800と仮定
     y = externalDisplay.bounds.y; // 上部はそのまま
-    logMessage(`External display found, setting x: ${x}, y: ${y}`);
+
   } else {
-    logMessage('No external display found, using default x and y');
+
   }
 
   mainWindow = new BrowserWindow({
@@ -45,19 +39,19 @@ async function createWindow() {
       nodeIntegration: false   // セキュリティのため無効化
     },
   });
-  logMessage('BrowserWindow created');
+
 
   // URLの読み込み前にログを追加
   const urlToLoad = isDev
     ? 'http://localhost:3000'
     : `file://${path.join(__dirname, '../../resources/build/index.html')}`;
   
-  logMessage(`Loading URL: ${urlToLoad}`);
+ 
 
   mainWindow.loadURL(urlToLoad);
 
   mainWindow.on('closed', function () {
-    logMessage('Window closed');
+
     mainWindow = null;
   });
 }
