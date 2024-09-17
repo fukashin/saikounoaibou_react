@@ -1,33 +1,41 @@
-ul, ol {
-  padding: 0;
-}
-
 ul li {
   position: relative;
-  list-style-type: none !important; /* ポチ消す */
+  list-style-type: none !important;
   padding: 0.5em;
   margin-bottom: 10px;
   margin-left: 10px;
+  margin-right: 20px;
   line-height: 1.5;
   background: #6599c4;
-  color: #fff; /* 文字の色を白に */
-  border-radius: 40px 0px 0px 40px; /* 左側の角を丸く */
-  border: 2px solid #d3d3d3; /* 明るい灰色のボーダー */
-  display: flex; /* 要素を横に並べる */
-  justify-content: space-between; /* 要素を左右に分ける */
-  align-items: center; /* 高さ揃え */
-  font-family: "Roboto", "Arial", sans-serif; /* 丸いフォント */
-  font-weight: bold; /* 文字を太く */
+  color: #fff;
+  border-radius: 40px 0px 0px 40px;
+  border: 2px solid #d3d3d3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* アニメーションの設定 */
+}
+
+ul li:hover {
+  transform: scale(1.05); /* ホバー時に少し大きく */
+  background-color: #4a8bb1; /* 背景色を少し濃く */
+}
+
+ul li.dragging {
+  transform: scale(1.1); /* ドラッグ中にさらに大きく */
+  background-color: rgba(101, 153, 196, 0.8); /* 背景色を少し透過させる */
 }
 
 ul li strong {
-  width: 150px; /* 固定幅を設定して左詰めに */
-  text-align: left; /* テキストを左揃え */
+  width: 150px;
+  text-align: left;
 }
 
 ul li div {
-  flex: 1; /* 残りのスペースを埋める */
-  text-align: left; /* テキストを左詰めに */
+  flex: 1;
+  text-align: left;
 }
 
 ul li:before { 
@@ -36,7 +44,7 @@ ul li:before {
   content: '';
   width: 1em;
   height: 1em;
-  border-radius: 50%; /* 真ん丸に */
-  background-color: white; /* 白い丸をつくる */
+  border-radius: 50%;
+  background-color: white;
   margin-right: 8px;
 }

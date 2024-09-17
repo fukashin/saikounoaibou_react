@@ -1,4 +1,5 @@
 import React from 'react';
+import '../CSS/menu.css'
 
 function Menu({ onViewChange }) {
   const handleClick = (action) => {

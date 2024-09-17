@@ -43,12 +43,29 @@ function ActivityList() {
     
   };
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const draggableElements = document.querySelectorAll('.draggable');
+  
+    draggableElements.forEach(element => {
+      // ドラッグ開始時の処理
+      element.addEventListener('dragstart', (e) => {
+        e.target.classList.add('dragging');
+      });
+  
+      // ドラッグ終了時の処理
+      element.addEventListener('dragend', (e) => {
+        e.target.classList.remove('dragging');
+      });
+    });
+  });
+
   return (
     <div>
       <h2>アクティビティリスト</h2>
       
       <ul>
         {activities.map((activity, index) => (
+          <div class="draggable" draggable="true">
           <li key={index} onClick={(e) => handleDelete(activity.id,e)}>
             {/* <strong>ID:</strong> {activity.id}<br /> */}
             <div>
@@ -62,6 +79,7 @@ function ActivityList() {
               <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br /> 
             </div>
           </li>
+          </div>
         ))}
       </ul>
     </div>
