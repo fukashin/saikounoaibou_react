@@ -37,6 +37,44 @@ async function getActivity() {
     throw error;  // エラーが発生した場合、例外をスロー
   }
 }
+// 日ごとのデータ取得
+const getDailyData = async (day) => {
+  const results = await Activity.findAll({
+    where: { day: day },
+    attributes: ['windowName', 'activeTime', 'week', 'day'],
+    order: [['activeTime', 'DESC']]  // 更新日時でソート
+  });
+  return results;
+};
+// 週ごとのデータ取得
+const getWeeklyData = async (week) => {
+  const results = await Activity.findAll({
+    where: { week: week },
+    attributes: [
+      'windowName',
+      [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
+    ],
+    group: ['windowName'],
+    order: [['activeTime', 'DESC']]  // 更新日時でソート
+  });
+  return results;
+};
+// 月ごとのデータ取得
+const getMonthlyData = async (month) => {
+  const results = await Activity.findAll({
+    where: { month: month },
+    attributes: [
+      'windowName',
+      [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
+    ],
+    group: ['windowName'],
+    order: [['activeTime', 'DESC']]  // 更新日時でソート
+  });
+  return results;
+};
+
+
+
 
 // ミリ秒を "hh:mm:ss" 形式に整形する関数
 function formatTime(milliseconds) {
@@ -49,4 +87,4 @@ function formatTime(milliseconds) {
 
 
 // フォーマット関数をエクスポート
-module.exports = { getKeywords, getActivity };
+module.exports = { getKeywords, getActivity, getMonthlyData, getWeeklyData, getDailyData };

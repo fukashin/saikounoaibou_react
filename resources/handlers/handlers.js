@@ -17,7 +17,7 @@ const addKeyword = require('../services/touroku');
 const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords,deleteRecordById_Keyword} = require('../services/sakujo');
 
 // レコードを取得するための関数を外部ファイルからインポート
-const {getKeywords,getActivity} = require('../services/syutoku')
+const {getKeywords,getActivity,getMonthlyData, getWeeklyData, getDailyData} = require('../services/syutoku')
 
 // IPCハンドラーを設定する関数
 function setupIpcHandlers() {
@@ -120,6 +120,33 @@ function setupIpcHandlers() {
             event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
         } catch (error) {
     event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
+}
+});
+ipcMain.on('get-Activity_day', async (event) => {
+    try {
+        const Activity = await getDailyData(); // キーワードを取得
+        console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
+        event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
+    } catch (error) {
+event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
+}
+});
+ipcMain.on('get-Activity_week', async (event) => {
+    try {
+        const Activity = await getWeeklyData(); // キーワードを取得
+        console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
+        event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
+    } catch (error) {
+event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
+}
+});
+ipcMain.on('get-Activity_month', async (event) => {
+    try {
+        const Activity = await getMonthlyData(); // キーワードを取得
+        console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
+        event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
+    } catch (error) {
+event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
 });
 }

@@ -3,6 +3,7 @@ const activeWindow = require('electron-active-window');
 // データベースのActivityモデルをインポート
 const Activity = require('../db/models/Activity');//モデルのインポートは｛｝付けない
 const Keyword = require('../db/models/Keyword');
+const moment = require('moment'); // 日付の操作のために moment.js を使用
 
 
 // 現在アクティブなウィンドウ名を保存する変数
@@ -20,6 +21,11 @@ function startActiveWindowMonitoring() {
     const deltaTime = now - lastCheckTime;
     // 最後のチェック時間を更新
     lastCheckTime = now;
+    // 現在の日付を取得
+    const noww = moment();
+    const currentMonth = noww.month() + 1;
+    const currentWeek = noww.week();
+    const currentDay = noww.date();
 
     try {
       // アクティブなウィンドウ情報を取得
@@ -36,8 +42,15 @@ function startActiveWindowMonitoring() {
 
         // 現在のウィンドウが前回のウィンドウと同じ場合
         if (currentWindow === windowName) {
-          // データベースからウィンドウ名に基づいてアクティビティを検索
-          const activity = await Activity.findOne({ where: { windowName } });
+          // windowName, month, week, day が一致するレコードを検索
+        const activity = await Activity.findOne({
+          where: {
+            windowName: windowName,
+            month: currentMonth,
+            week: currentWeek,
+            day: currentDay
+            }
+          });
           if (activity) {
             // アクティビティが存在する場合、アクティブ時間を更新
             activity.activeTime += deltaTime;
