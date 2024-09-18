@@ -6,6 +6,10 @@
 .pnp.js
 database.sqlite
 /dist
+# データベース関連フォルダ
+/config
+/migrations
+/seeders
 
 # testing
 /coverage
