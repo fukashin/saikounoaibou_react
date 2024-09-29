@@ -1,7 +1,9 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray, Menu } = require('electron'); // Tray と Menu を追加
 const fs = require('fs');
 const os = require('os');
+
+let tray = null; // トレイの変数を追加
 
 // ログ出力用の関数
 function logMessage(message) {
@@ -9,8 +11,52 @@ function logMessage(message) {
   fs.appendFileSync(logPath, `${new Date().toISOString()} - ${message}\n`);
 }
 
-// アプリケーション起動時にログを出力
-logMessage('App is starting');
+// トレイアイコンの設定関数
+function createTray(mainWindow) {
+  try {
+    tray = new Tray(path.join(__dirname, 'アイコン.png')); // ここにテスト用の .ico パスを指定
+
+    if (tray === null) {
+      throw new Error('Tray creation failed: tray is null');
+    }
+
+    const contextMenu = Menu.buildFromTemplate([
+      { label: '表示', click: () => { mainWindow.show(); } },
+      { 
+        label: '終了', 
+        click: () => {
+          app.isQuiting = true;
+      
+          // すべてのイベントリスナーをクリア
+          app.removeAllListeners();
+      
+          // トレイアイコンの破棄
+          if (tray) tray.destroy();
+      
+          // すべてのウィンドウを閉じる
+          BrowserWindow.getAllWindows().forEach(win => win.close());
+          
+          // アプリケーションのプロセスを強制的に終了
+          process.exit(0);
+        }
+      }
+      
+      
+    ]);
+    tray.setContextMenu(contextMenu);
+    tray.setToolTip('最高の相棒');
+
+  } catch (error) {
+    logMessage(`Error during tray creation: ${error}`);
+  }  
+  // トレイのクリックでウィンドウを表示/非表示する
+  tray.on('click', () => {
+    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+  });
+  
+}
+
+
 
 // 動的インポートを使って isDev をロード
 async function loadModules() {
@@ -19,10 +65,8 @@ async function loadModules() {
     const { default: isDev } = await import('electron-is-dev');
     logMessage(`isDev loaded: ${isDev}`);
 
-    // 絶対パスでモジュールを読み込む
     logMessage('Resolving module paths...');
     
-    // パスの解決に path.resolve() を使用してアプリの起動ディレクトリを基準に絶対パスを取得
     const servicesPath = isDev
       ? path.resolve(__dirname, '../resources/services/initializeapp')  // 開発環境
       : path.resolve(__dirname, '../../../resources/services/initializeapp'); // パッケージ化後
@@ -40,7 +84,6 @@ async function loadModules() {
     handlersPath: ${handlersPath},
     gamenKirikaePath: ${gamenKirikaePath}`);
 
-    // 各モジュールを読み込む
     logMessage('Loading modules...');
     const initializeAppModule = require(servicesPath);
     const initializeApp = initializeAppModule.default || initializeAppModule;
@@ -53,15 +96,18 @@ async function loadModules() {
 
     logMessage('Modules loaded successfully');
 
-    // 初期化処理を行う
+    logMessage('Creating window...');
+    // 非同期関数で `await` を使用
+    const mainWindow = await createWindow();
+    logMessage('Window created');
+
+    // システムトレイの設定
+    createTray(mainWindow); // トレイアイコンを作成
+
     logMessage('Initializing app...');
     initializeApp();
     logMessage('App initialized');
     
-    logMessage('Creating window...');
-    createWindow();
-    logMessage('Window created');
-
     logMessage('Setting up IPC handlers...');
     setupIpcHandlers();
     logMessage('IPC handlers set up');
@@ -75,20 +121,18 @@ async function loadModules() {
 app.on('ready', async () => {
   try {
     logMessage('App is ready, loading modules...');
-    // モジュールの読み込みと初期化を実行
     await loadModules();
   } catch (error) {
     logMessage(`Error during app initialization: ${error}`);
   }
 });
 
-app.on('window-all-closed', function () {
-  logMessage('All windows closed');
-  if (process.platform !== 'darwin') {
-    logMessage('Quitting app');
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin' || app.isQuiting) {
     app.quit();
   }
 });
+
 
 app.on('activate', async function () {
   logMessage('App activated');
@@ -101,3 +145,4 @@ app.on('activate', async function () {
     }
   }
 });
+

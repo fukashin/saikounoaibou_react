@@ -39,6 +39,7 @@ async function createWindow() {
       nodeIntegration: false   // セキュリティのため無効化
     },
   });
+  
 
 
   // URLの読み込み前にログを追加
@@ -50,10 +51,11 @@ async function createWindow() {
 
   mainWindow.loadURL(urlToLoad);
 
-  mainWindow.on('closed', function () {
-
-    mainWindow = null;
+  mainWindow.on('close', (event) => {
+      event.preventDefault();
+      mainWindow.hide();  // ウィンドウを隠す
   });
+  return mainWindow; // `mainWindow` を返す
 }
 
 module.exports = createWindow;
