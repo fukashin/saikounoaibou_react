@@ -1,6 +1,6 @@
 const Keyword = require('../db/models/Keyword'); 
 const Activity = require('../db/models/Activity'); 
-
+const { Sequelize } = require('sequelize'); 
 // キーワードをデータベースから取得する関数
 async function getKeywords() {
   try {
@@ -64,26 +64,30 @@ const getDailyData = async (day) => {
 
 // 週ごとのデータ取得
 const getWeeklyData = async (week) => {
+  try {
   const results = await Activity.findAll({
     where: { week: week },
     attributes: [
       'windowName',
-      [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
+      [Sequelize.fn('sum', Sequelize.col('activeTime')), 'totalActiveTime']
     ],
     group: ['windowName'],
-    order: [[sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
+    order: [[Sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
   });
   // 取得したデータをフォーマット
   const formattedActivities = results.map(activity => {
     return {
       ...activity.dataValues,
-      activeTimeFormatted: formatTime(activity.activeTime)  // ミリ秒を整形して追加
+      activeTimeFormatted: formatTime(activity.dataValues.totalActiveTime)  // ミリ秒を整形して追加
 
     };
     
   });
 
   return formattedActivities;  // フォーマット済みのアクティビティリストを返す
+}catch(error){
+  console.error('Error fetching Activities:', error);
+}
 };
 
 // 月ごとのデータ取得
@@ -92,16 +96,16 @@ const getMonthlyData = async (month) => {
     where: { month: month },
     attributes: [
       'windowName',
-      [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
+      [Sequelize.fn('sum', Sequelize.col('activeTime')), 'totalActiveTime']
     ],
     group: ['windowName'],
-    order: [[sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
+    order: [[Sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
   });
   // 取得したデータをフォーマット
   const formattedActivities = results.map(activity => {
     return {
       ...activity.dataValues,
-      activeTimeFormatted: formatTime(activity.activeTime)  // ミリ秒を整形して追加
+      activeTimeFormatted: formatTime(activity.dataValues.totalActiveTime)  // ミリ秒を整形して追加
 
     };
     

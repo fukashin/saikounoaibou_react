@@ -95,7 +95,9 @@ function ActivityList() {
 
   return (
     <div>
-      <h2>アクティビティリスト</h2>
+      {viewType ==='day' && <h2>日別リスト</h2> }
+      {viewType ==='week' && <h2>週別リスト</h2> }
+      {viewType ==='month' && <h2>月別リスト</h2> }
 
       {/* 表示切り替えボタン */}
       {renderButtons()}
@@ -110,9 +112,11 @@ function ActivityList() {
               <div>
                 <strong>経過時間:</strong> {activity.activeTimeFormatted}<br />
               </div>
+              {viewType ==='day' && 
               <div>
                 <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br />
               </div>
+              }
             </li>
           </div>
         ))}
