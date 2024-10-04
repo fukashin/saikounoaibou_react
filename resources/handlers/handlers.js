@@ -116,33 +116,40 @@ function setupIpcHandlers() {
     ipcMain.on('get-Activity', async (event) => {
         try {
             const Activity = await getActivity(); // キーワードを取得
-            console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
+            console.log('Received zentai:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
             event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
         } catch (error) {
     event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
 });
-ipcMain.on('get-Activity_day', async (event) => {
+
+// 日ごとのデータを取得
+ipcMain.on('get-Activity_day', async (event,day) => {
     try {
-        const Activity = await getDailyData(); // キーワードを取得
+        console.log(`temaemade${day}`);
+        const Activity = await getDailyData(day); // データを取得
+        console.log('Received day:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
+        event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
+    } catch (error) {
+        console.error('Error occurred while fetching daily data:', error); // エラーメッセージを詳細に表示
+        event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
+    }
+});
+// 週ごとのデータを取得
+ipcMain.on('get-Activity_week', async (event,week) => {
+    try {
+        console.log(`aaaaaa${week}`)
+        const Activity = await getWeeklyData(week); //  データを取得
         console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
         event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
     } catch (error) {
 event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
 });
-ipcMain.on('get-Activity_week', async (event) => {
+// 月ごとのデータを取得
+ipcMain.on('get-Activity_month', async (event,month) => {
     try {
-        const Activity = await getWeeklyData(); // キーワードを取得
-        console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
-        event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
-    } catch (error) {
-event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
-}
-});
-ipcMain.on('get-Activity_month', async (event) => {
-    try {
-        const Activity = await getMonthlyData(); // キーワードを取得
+        const Activity = await getMonthlyData(month); //  データを取得
         console.log('Received dataaaaaaaaaaaaaa:', JSON.stringify(Activity)); // デバッグ用にシリアライズされたデータを表示
         event.reply('Activity-list', JSON.parse(JSON.stringify(Activity))); // キーワードリストをレンダラープロセスに送信
     } catch (error) {

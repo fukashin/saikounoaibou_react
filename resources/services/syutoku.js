@@ -39,13 +39,29 @@ async function getActivity() {
 }
 // 日ごとのデータ取得
 const getDailyData = async (day) => {
+  try {
+  console.log('Fetching daily data for day:', day); // `day` が `null` でないか確認
   const results = await Activity.findAll({
     where: { day: day },
-    attributes: ['windowName', 'activeTime', 'week', 'day'],
-    order: [['activeTime', 'DESC']]  // 更新日時でソート
+    attributes: ['windowName', 'activeTime', 'week', 'day','updatedAt'],
+    order: [['activeTime', 'DESC']]  // アクティブ時間でソート
   });
-  return results;
+  // 取得したデータをフォーマット
+  const formattedActivities = results.map(activity => {
+    return {
+      ...activity.dataValues,
+      activeTimeFormatted: formatTime(activity.activeTime)  // ミリ秒を整形して追加
+
+    };
+    
+  });
+
+  return formattedActivities;  // フォーマット済みのアクティビティリストを返す
+  }catch(error){
+    console.error('Error fetching Activities:', error);
+  }
 };
+
 // 週ごとのデータ取得
 const getWeeklyData = async (week) => {
   const results = await Activity.findAll({
@@ -55,10 +71,21 @@ const getWeeklyData = async (week) => {
       [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
     ],
     group: ['windowName'],
-    order: [['activeTime', 'DESC']]  // 更新日時でソート
+    order: [[sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
   });
-  return results;
+  // 取得したデータをフォーマット
+  const formattedActivities = results.map(activity => {
+    return {
+      ...activity.dataValues,
+      activeTimeFormatted: formatTime(activity.activeTime)  // ミリ秒を整形して追加
+
+    };
+    
+  });
+
+  return formattedActivities;  // フォーマット済みのアクティビティリストを返す
 };
+
 // 月ごとのデータ取得
 const getMonthlyData = async (month) => {
   const results = await Activity.findAll({
@@ -68,10 +95,21 @@ const getMonthlyData = async (month) => {
       [sequelize.fn('sum', sequelize.col('activeTime')), 'totalActiveTime']
     ],
     group: ['windowName'],
-    order: [['activeTime', 'DESC']]  // 更新日時でソート
+    order: [[sequelize.literal('totalActiveTime'), 'DESC']]  // 合算したアクティブ時間でソート
   });
-  return results;
+  // 取得したデータをフォーマット
+  const formattedActivities = results.map(activity => {
+    return {
+      ...activity.dataValues,
+      activeTimeFormatted: formatTime(activity.activeTime)  // ミリ秒を整形して追加
+
+    };
+    
+  });
+
+  return formattedActivities;  // フォーマット済みのアクティビティリストを返す
 };
+
 
 
 
