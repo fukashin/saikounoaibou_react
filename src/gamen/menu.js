@@ -8,7 +8,7 @@ function Menu({ onViewChange }) {
       if (userConfirmed) {
         window.electron.ipcRenderer.send(action);
       }
-    } else if (action === 'get-Activity') {
+    } else if (action === 'get-Activity_day') {
       onViewChange('activity'); // 親にアクティビティの表示を依頼
     } else if (action === 'get-keywords') {
       onViewChange('keyword'); // 親にキーワードリストの表示を依頼
@@ -34,7 +34,7 @@ function Menu({ onViewChange }) {
       <a href="#"
        id="アクティブ表示ボタン"
       className="btn btn-flat" 
-      onClick={() => handleClick('get-Activity')}>
+      onClick={() => handleClick('get-Activity_day')}>
         <span>アクティブ表示ボタン</span>
       </a>
       <a href="#"
@@ -55,12 +55,12 @@ function Menu({ onViewChange }) {
       onClick={() => handleClick('delete-all-keyword-records')}>
         <span>全キーワードをすべて削除</span>
       </a>
-      <a href="#"
+      {/* <a href="#"
        className="btn btn-flat" 
       //  画面の更新を避けるためのeを送信している
-       onClick={(e) => handleClick_futatu('get-keywords','get-Activity', e)}>
+       onClick={(e) => handleClick_futatu('get-Activity_day','get-Activity', e)}>
         <span>更新</span>
-      </a>
+      </a> */}
     </div>
   );
 }

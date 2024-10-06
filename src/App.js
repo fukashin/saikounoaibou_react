@@ -5,15 +5,24 @@ import KeywordForm from './gamen/textbox';  // KeywordFormコンポーネント�
 import KeywordList from './gamen/hyouzi_Keywords';
 import ActivitydList from './gamen/hyouzi_Activity';
 import React, { useEffect ,useState } from 'react';  // ReactとuseEffectフックをインポート
+import moment from 'moment';
 
 // Appコンポーネントの定義
 function App() {
   const [activeView, setActiveView] = useState('activity'); // 表示内容の状態を管理
 
+  const [day, setDay] = useState(null);
+
+  useEffect(() => {
+    // 実行時に日付、週、月を取得
+    const now = moment();
+    setDay(now.date()); // 日
+  },[]);
+
   const handleViewChange = (view) => {
     setActiveView(view); // 表示するコンポーネントを変更
     if (view === 'activity') {
-      window.electron.ipcRenderer.send('get-Activity'); // 'get-Activity' イベントを送信
+      window.electron.ipcRenderer.send('get-Activity_day',day); // 'get-Activity' イベントを送信
     }
   };
 

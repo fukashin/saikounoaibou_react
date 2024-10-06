@@ -48,3 +48,40 @@ ul li:before {
   background-color: white;
   margin-right: 8px;
 }
+
+a.btn-flat2 {
+  overflow: hidden;
+
+  padding: 0rem 0rem;
+  margin: 0rem 1rem;
+
+  color: #fff;
+  border-radius: 0;
+  background: #000;
+}
+
+a.btn-flat2 span {
+  position: relative;
+}
+
+a.btn-flat2:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 150%;
+  height: 800%;
+
+  content: "";
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transform: translateX(-208%) translateY(-25%) rotate(45deg);
+  transform: translateX(-250%) translateY(-25%) rotate(45deg);
+
+  background: #00b7ee;
+}
+
+a.btn-flat2:hover:before {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-79%) translateY(-25%) rotate(45deg);
+}

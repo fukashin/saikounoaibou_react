@@ -17,7 +17,7 @@ async function initializeApp() {
     // 同期成功のメッセージ
     console.log('Database synchronized successfully.');
     // アクティブウィンドウの監視を開始
-    // startActiveWindowMonitoring();
+    startActiveWindowMonitoring();
   } catch (error) {
     // データベース接続に失敗した場合のエラーメッセージ
     console.error('Unable to connect to the database:', error);

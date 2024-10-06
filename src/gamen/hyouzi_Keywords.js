@@ -45,12 +45,24 @@ function KeywordList() {
     window.electron.ipcRenderer.send('get-Activity');
     
   };
+  const handleUpdateClick = (event) => {
+    event.preventDefault();  // デフォルトのアンカー動作を阻止
+    window.electron.ipcRenderer.send("get-keywords");
+
+  };
 
 
 
   return (
     <div>
       <h2>キーワードリスト</h2>
+            {/* 更新ボタン */}
+            <a href="#"
+       className="btn btn-flat" 
+      //  画面の更新を避けるためのeを送信している
+       onClick={(e) => handleUpdateClick(e)}>
+        <span>更新</span>
+        </a>
 
       <ul>
         {keywords.length > 0 ? (

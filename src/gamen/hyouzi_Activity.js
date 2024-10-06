@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../CSS/Keyword_Active.css';
+import '../CSS/menu.css';
 import moment from 'moment';
 
 function ActivityList() {
@@ -19,20 +20,19 @@ function ActivityList() {
 
   useEffect(() => {
     // `viewType` の変更に応じてデータを取得
-    
     if (viewType && day !== null && week !== null && month !== null) {
       if(viewType === 'day'){
-      console.log(`Sending request for ${viewType} with day=${day}, week=${week}, month=${month}`);
-      window.electron.ipcRenderer.send('get-Activity_day',day);
-      console.log(`当日`)
-      }else if (viewType === 'week') {
-        window.electron.ipcRenderer.send('get-Activity_week',week);
-        console.log(`当週`)
+        console.log(`Sending request for ${viewType} with day=${day}, week=${week}, month=${month}`);
+        window.electron.ipcRenderer.send('get-Activity_day', day);
+        console.log(`当日`);
+      } else if (viewType === 'week') {
+        window.electron.ipcRenderer.send('get-Activity_week', week);
+        console.log(`当週`);
       } else if (viewType === 'month') {
-        window.electron.ipcRenderer.send('get-Activity_month',month);
-        console.log(`当月`)
+        window.electron.ipcRenderer.send('get-Activity_month', month);
+        console.log(`当月`);
       }
-    } 
+    }
 
     // アクティビティリストを受け取る
     window.electron.ipcRenderer.on('Activity-list', (data) => {
@@ -68,39 +68,55 @@ function ActivityList() {
     window.electron.ipcRenderer.send('get-Activity');
   };
 
+  // 更新ボタンのクリックハンドラ
+  const handleUpdateClick = () => {
+    if (viewType === 'day') {
+      window.electron.ipcRenderer.send('get-Activity_day', day);
+      console.log('Updating 日別');
+    } else if (viewType === 'week') {
+      window.electron.ipcRenderer.send('get-Activity_week', week);
+      console.log('Updating 週別');
+    } else if (viewType === 'month') {
+      window.electron.ipcRenderer.send('get-Activity_month', month);
+      console.log('Updating 月別');
+    }
+  };
+
   // 画面切り替え用のボタン
   const renderButtons = () => (
     <div>
-      <button onClick={() => setViewType('day')}>日別</button>
-      <button onClick={() => setViewType('week')}>週別</button>
-      <button onClick={() => setViewType('month')}>月別</button>
+      <a href="#"
+       id="日別"
+      className="btn btn-flat2" 
+      onClick={() => setViewType('day')}>
+        <span>日別</span>
+      </a>
+      <a href="#"
+       id="日別"
+      className="btn btn-flat2" 
+      onClick={() => setViewType('week')}>
+        <span>週別</span>
+      </a>
+      <a href="#"
+       id="日別"
+      className="btn btn-flat2" 
+      onClick={() => setViewType('month')}>
+        <span>月別</span>
+      </a>
     </div>
   );
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const draggableElements = document.querySelectorAll('.draggable');
-  
-    draggableElements.forEach(element => {
-      // ドラッグ開始時の処理
-      element.addEventListener('dragstart', (e) => {
-        e.target.classList.add('dragging');
-      });
-  
-      // ドラッグ終了時の処理
-      element.addEventListener('dragend', (e) => {
-        e.target.classList.remove('dragging');
-      });
-    });
-  });
-
   return (
     <div>
-      {viewType ==='day' && <h2>日別リスト</h2> }
-      {viewType ==='week' && <h2>週別リスト</h2> }
-      {viewType ==='month' && <h2>月別リスト</h2> }
+      {viewType === 'day' && <h2>日別リスト</h2>}
+      {viewType === 'week' && <h2>週別リスト</h2>}
+      {viewType === 'month' && <h2>月別リスト</h2>}
 
       {/* 表示切り替えボタン */}
       {renderButtons()}
+
+      {/* 更新ボタン */}
+      <button onClick={handleUpdateClick}>更新</button>
 
       <ul>
         {activities.map((activity, index) => (
@@ -112,7 +128,7 @@ function ActivityList() {
               <div>
                 <strong>経過時間:</strong> {activity.activeTimeFormatted}<br />
               </div>
-              {viewType ==='day' && 
+              {viewType === 'day' &&
               <div>
                 <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br />
               </div>
