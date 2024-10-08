@@ -19,7 +19,7 @@ function ActivityList() {
   }, []);
 
   useEffect(() => {
-    // `viewType` の変更に応じてデータを取得
+    // 初回実行
     if (viewType && day !== null && week !== null && month !== null) {
       if(viewType === 'day'){
         console.log(`Sending request for ${viewType} with day=${day}, week=${week}, month=${month}`);
@@ -33,6 +33,23 @@ function ActivityList() {
         console.log(`当月`);
       }
     }
+  
+    // その後10秒おきに繰り返し処理を行う
+    const intervalId = setInterval(() => {
+      if (viewType && day !== null && week !== null && month !== null) {
+        if(viewType === 'day'){
+          console.log(`Sending request for ${viewType} with day=${day}, week=${week}, month=${month}`);
+          window.electron.ipcRenderer.send('get-Activity_day', day);
+          console.log(`当日`);
+        } else if (viewType === 'week') {
+          window.electron.ipcRenderer.send('get-Activity_week', week);
+          console.log(`当週`);
+        } else if (viewType === 'month') {
+          window.electron.ipcRenderer.send('get-Activity_month', month);
+          console.log(`当月`);
+        }
+      }
+    }, 10000); // 10秒おき
 
     // アクティビティリストを受け取る
     window.electron.ipcRenderer.on('Activity-list', (data) => {
@@ -54,6 +71,7 @@ function ActivityList() {
     return () => {
       window.electron.ipcRenderer.removeAllListeners('Activity-list');
       window.electron.ipcRenderer.removeAllListeners('Activity-error');
+      clearInterval(intervalId);
     };
   }, [viewType, day, week, month]); // `viewType` が変わったときに再実行
 
@@ -105,6 +123,10 @@ function ActivityList() {
       </a>
     </div>
   );
+
+
+
+
 
   return (
     <div>
