@@ -19,6 +19,9 @@ const { deleteRecordById, deleteAllRecords ,deleteAllkeywordRecords,deleteRecord
 // レコードを取得するための関数を外部ファイルからインポート
 const {getKeywords,getActivity,getMonthlyData, getWeeklyData, getDailyData} = require('../services/syutoku')
 
+// アラーム関連処理
+const { addAlarm, getAlarms, updateAlarm, deleteAlarm } = require('../services/alam_CRUD');
+
 // IPCハンドラーを設定する関数
 function setupIpcHandlers() {
 
@@ -156,6 +159,26 @@ ipcMain.on('get-Activity_month', async (event,month) => {
 event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
 });
+
+ipcMain.on('add-alarm', async (event,alarmData) => {
+    try {
+        // キーワードを追加する関数を呼び出し、結果を取得
+        const result = await addAlarm(alarmData);
+
+        // すでに登録されている場合も含めて結果を処理
+        if (result === "すでに登録されているアラームです") {
+            // キーワードが既に存在する場合のメッセージを送信
+            event.reply('add-error', result);
+        } else {
+            // 成功した場合のメッセージを送信
+            event.reply('add-success', result);
+        }
+    } catch (error) {
+        // 失敗した場合のエラーメッセージを送信
+        event.reply('add-error', `アラームの追加に失敗しました: ${error.message}`);
+    }
+});
+
 }
 
 
