@@ -121,7 +121,15 @@ function ActivityList() {
       onClick={() => setViewType('month')}>
         <span>月別</span>
       </a>
+      {/* 更新ボタン */}
+      <a href="#"
+       id="更新"
+      className="btn btn-flat2" 
+      onClick={() => handleUpdateClick()}>
+        <span>更新</span>
+      </a>
     </div>
+    
   );
 
 
@@ -137,8 +145,6 @@ function ActivityList() {
       {/* 表示切り替えボタン */}
       {renderButtons()}
 
-      {/* 更新ボタン */}
-      <button onClick={handleUpdateClick}>更新</button>
 
       <ul>
         {activities.map((activity, index) => (
