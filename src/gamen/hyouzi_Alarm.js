@@ -54,6 +54,13 @@ function AlarmList() {
   return (
     <div>
       <h2>アラーム設定リスト</h2>
+
+      <a href="#"
+       id="新規"
+      className="btn btn-flat2" >
+        <span>新規</span>
+      </a>
+
       <ul>
         {/* アラームリストの項目を表示 */}
         {alarms.map((alarm, index) => (
