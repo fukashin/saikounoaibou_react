@@ -12,6 +12,8 @@ function Menu({ onViewChange }) {
       onViewChange('activity'); // 親にアクティビティの表示を依頼
     } else if (action === 'get-keywords') {
       onViewChange('keyword'); // 親にキーワードリストの表示を依頼
+    } else if (action === 'get-alarm') {
+      onViewChange('alarm'); // 親にキーワードリストの表示を依頼
     } else {
       window.electron.ipcRenderer.send(action);
     }
@@ -42,6 +44,12 @@ function Menu({ onViewChange }) {
       className="btn btn-flat" 
       onClick={() => handleClick('get-keywords')}>
         <span>キーワード表示ボタン</span>
+      </a>
+      <a href="#"
+       id="アラームリスト"
+      className="btn btn-flat" 
+      onClick={() => handleClick('get-alarm')}>
+        <span>アラームリスト</span>
       </a>
       <a href="#"
        id="全アクティブ削除ボタン"

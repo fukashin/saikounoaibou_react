@@ -146,25 +146,26 @@ function ActivityList() {
       {renderButtons()}
 
 
-      <ul>
-        {activities.map((activity, index) => (
-          <div className="draggable" draggable="true" key={index}>
-            <li onClick={(e) => handleDelete(activity.id, e)}>
-              <div>
-                <strong>ウィンドウ名:</strong> {activity.windowName}<br />
-              </div>
-              <div>
-                <strong>経過時間:</strong> {activity.activeTimeFormatted}<br />
-              </div>
-              {viewType === 'day' &&
-              <div>
-                <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br />
-              </div>
-              }
-            </li>
-          </div>
-        ))}
-      </ul>
+    <ul className="scrollable-list">
+      {activities.map((activity, index) => (
+        <div className="draggable" draggable="true" key={index}>
+          <li onClick={(e) => handleDelete(activity.id, e)}>
+            <div>
+              <strong>ウィンドウ名:</strong> {activity.windowName}<br />
+            </div>
+            <div>
+              <strong>経過時間:</strong> {activity.activeTimeFormatted}<br />
+            </div>
+            {viewType === 'day' &&
+            <div>
+              <strong>最新更新時間:</strong> {new Date(activity.updatedAt).toLocaleString()}<br />
+            </div>
+            }
+          </li>
+        </div>
+      ))}
+    </ul>
+
     </div>
   );
 }

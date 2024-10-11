@@ -160,6 +160,8 @@ event.reply('Activity-error', 'Failed to fetch Activity'); // エラーを送信
 }
 });
 
+
+// アラームの追加リクエストを受け取って処理を呼び出し
 ipcMain.on('add-alarm', async (event,alarmData) => {
     try {
         // キーワードを追加する関数を呼び出し、結果を取得

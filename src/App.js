@@ -4,6 +4,8 @@ import Menu from './gamen/menu';  // Menuコンポーネントをインポート
 import KeywordForm from './gamen/textbox';  // KeywordFormコンポーネントをインポート
 import KeywordList from './gamen/hyouzi_Keywords';
 import ActivitydList from './gamen/hyouzi_Activity';
+import AlarmList from './gamen/hyouzi_Alarm';
+
 import React, { useEffect ,useState } from 'react';  // ReactとuseEffectフックをインポート
 import moment from 'moment';
 
@@ -63,6 +65,7 @@ function App() {
         {/* フラグに基づいて表示するコンポーネントを切り替え */}
         {activeView === 'activity' && <ActivitydList />}
         {activeView === 'keyword' && <KeywordList />}
+        {activeView === 'alarm' && <AlarmList />}
         <div id="status"></div>
       </div>
     </div>

@@ -1,3 +1,18 @@
+
+.scrollable-list {
+  max-height: 400px; /* 必要に応じて高さを調整 */
+  overflow-y: scroll; /* 縦方向のスクロールを許可 */
+  -ms-overflow-style: none;  /* IE と Edge のスクロールバーを非表示 */
+  scrollbar-width: none; /* Firefox のスクロールバーを非表示 */
+}
+
+.scrollable-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera のスクロールバーを非表示 */
+}
+
+
+
+
 ul li {
   position: relative;
   list-style-type: none !important;
