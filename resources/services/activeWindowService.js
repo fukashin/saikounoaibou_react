@@ -22,7 +22,7 @@ function startActiveWindowMonitoring() {
     // 最後のチェック時間を更新
     lastCheckTime = now;
     // 現在の日付を取得
-    const noww = moment();
+    const noww = moment.tz("Asia/Tokyo"); // JST (日本標準時) の場合
     const currentMonth = noww.month() + 1;
     const currentWeek = noww.week();
     const currentDay = noww.date();

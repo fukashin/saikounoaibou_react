@@ -5,7 +5,7 @@ const { Sequelize } = require('sequelize');
 // SQLiteとの接続設定
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite' // SQLiteファイルのパス
+  storage: './database.sqlite', // SQLiteファイルのパス
 });
 
 module.exports = sequelize;

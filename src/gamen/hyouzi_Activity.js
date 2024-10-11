@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../CSS/Keyword_Active.css';
 import '../CSS/menu.css';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 function ActivityList() {
   const [activities, setActivities] = useState([]);
@@ -12,7 +12,7 @@ function ActivityList() {
 
   useEffect(() => {
     // 実行時に日付、週、月を取得
-    const now = moment();
+    const now = moment.tz("Asia/Tokyo");
     setDay(now.date()); // 日
     setWeek(now.week()); // 週番号
     setMonth(now.month() + 1); // 月 (moment は 0 ベースなので +1)

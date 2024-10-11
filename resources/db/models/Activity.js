@@ -46,18 +46,17 @@ const Activity = sequelize.define('Activity', {
 },
 {
   hooks: {
-    // 保存前に自動で月、週番号、日にちを設定する
     beforeCreate: (activity, options) => {
-      const now = moment(); // 現在の日付と時刻を取得
-      activity.month = now.month() + 1; // 月（momentは0から始まるため+1）
+      const now = moment().tz("Asia/Tokyo"); // 現在の時刻を JST に設定
+      activity.month = now.month() + 1; // 月 (0 から始まるため +1)
       activity.week = now.week(); // 年の週番号
-      activity.day = now.date(); // 日にち
+      activity.day = now.date(); // 日付
     },
     beforeUpdate: (activity, options) => {
-      const now = moment(); // 現在の日付と時刻を取得
-      activity.month = now.month() + 1; // 月（momentは0から始まるため+1）
+      const now = moment().tz("Asia/Tokyo"); // 現在の時刻を JST に設定
+      activity.month = now.month() + 1; // 月 (0 から始まるため +1)
       activity.week = now.week(); // 年の週番号
-      activity.day = now.date(); // 日にち
+      activity.day = now.date(); // 日付
     }
   }
 });
