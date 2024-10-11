@@ -1,0 +1,87 @@
+/* モーダルのフェードイン・フェードアウトアニメーション */
+.modal {
+    position: fixed; /* 画面全体を基準にして固定する */
+    top: 30%; /* 縦方向に画面の中央に位置する */
+    left: 30%; /* 横方向に画面の中央に位置する */
+    transform: translate(-50%, -50%); /* モーダルの中央を基準にして正確に中央に表示 */
+    background-color: white; /* モーダルの背景色を白に設定 */
+    padding: 20px; /* モーダル内部に20pxのパディングを追加 */
+    z-index: 1000; /* オーバーレイの上に表示するため、z-indexを高く設定 */
+    width: 400px; /* モーダルの幅を400pxに設定 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* モーダルに影を付ける */
+    opacity: 0; /* 初期状態でモーダルを透明にして非表示にする */
+    transform: translateY(-50px); /* モーダルを少し上にずらして表示する準備をする */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* 表示・非表示の際に滑らかにアニメーションする */
+}
+  
+.modal-overlay {
+    position: fixed; /* 画面全体を覆う固定表示にする */
+    top: 0; /* オーバーレイを画面の上端に位置させる */
+    left: 0; /* オーバーレイを画面の左端に位置させる */
+    right: 0; /* オーバーレイを画面の右端まで広げる */
+    bottom: 0; /* オーバーレイを画面の下端まで広げる */
+    background: rgba(0, 0, 0, 0.5); /* 背景を半透明の黒にして画面全体を薄暗くする */
+    z-index: 999; /* モーダルの下に表示されるように設定 */
+}
+
+/* モーダルの表示開始時のスタイル */
+.modal-enter {
+    opacity: 0; /* 最初は透明にして非表示 */
+    transform: scale(0.9); /* モーダルを少し縮小した状態で表示開始 */
+}
+
+/* モーダル表示中のスタイル */
+.modal-enter-active {
+    opacity: 1; /* 完全に表示する */
+    transform: scale(1); /* 通常のサイズに戻す */
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out; /* 300msで滑らかに表示 */
+}
+
+/* モーダルの終了時のスタイル */
+.modal-exit {
+    opacity: 1; /* 完全に表示されている状態から開始 */
+    transform: scale(1); /* 通常のサイズのまま */
+}
+
+/* モーダル非表示時のアニメーション */
+.modal-exit-active {
+    opacity: 0; /* 非表示にする */
+    transform: scale(0.9); /* モーダルを縮小しながら消える */
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out; /* 300msで滑らかに非表示 */
+}
+
+/* オーバーレイ（背景の暗くなる部分）の表示開始時 */
+.modal-overlay-enter {
+    opacity: 0; /* 初期状態は透明で非表示 */
+}
+
+/* オーバーレイ表示中 */
+.modal-overlay-enter-active {
+    opacity: 1; /* 完全に表示 */
+    transition: opacity 300ms ease-in-out; /* 300msで滑らかに表示 */
+}
+
+/* オーバーレイの終了時 */
+.modal-overlay-exit {
+    opacity: 1; /* 完全に表示された状態から開始 */
+}
+
+/* オーバーレイ非表示時のアニメーション */
+.modal-overlay-exit-active {
+    opacity: 0; /* 非表示にする */
+    transition: opacity 300ms ease-in-out; /* 300msで滑らかに非表示 */
+}
+
+/* ReactModalのオーバーレイが開いた後のモーダルおよびオーバーレイのスタイル */
+.ReactModal__Overlay--after-open .modal,
+.ReactModal__Overlay--after-open .modal-overlay {
+    opacity: 1; /* 完全に表示する */
+    transform: translateY(0); /* 元の位置に戻す */
+}
+
+/* ReactModalのオーバーレイが閉じる前のモーダルおよびオーバーレイのスタイル */
+.ReactModal__Overlay--before-close .modal,
+.ReactModal__Overlay--before-close .modal-overlay {
+    opacity: 0; /* 非表示にする */
+    transform: translateY(-20px); /* 少し上にずらして非表示 */
+}
