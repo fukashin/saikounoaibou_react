@@ -4,7 +4,7 @@
     top: 30%; /* 縦方向に画面の中央に位置する */
     left: 30%; /* 横方向に画面の中央に位置する */
     transform: translate(-50%, -50%); /* モーダルの中央を基準にして正確に中央に表示 */
-    background-color: white; /* モーダルの背景色を白に設定 */
+    background-color: #282c34; /* モーダルの背景色を白に設定 */
     padding: 20px; /* モーダル内部に20pxのパディングを追加 */
     z-index: 1000; /* オーバーレイの上に表示するため、z-indexを高く設定 */
     width: 400px; /* モーダルの幅を400pxに設定 */
@@ -12,7 +12,14 @@
     opacity: 0; /* 初期状態でモーダルを透明にして非表示にする */
     transform: translateY(-50px); /* モーダルを少し上にずらして表示する準備をする */
     transition: opacity 0.3s ease, transform 0.3s ease; /* 表示・非表示の際に滑らかにアニメーションする */
+    border-radius: 10px; /* 角を丸くする */
+    border: 2px solid #ccc; /* 枠線を追加 */
+    color: white; /* テキストを白に */
 }
+.modal-content {
+    color: white; /* モーダル内のテキストの色を白に */
+  }
+
   
 .modal-overlay {
     position: fixed; /* 画面全体を覆う固定表示にする */
@@ -68,8 +75,8 @@
 
 /* オーバーレイ非表示時のアニメーション */
 .modal-overlay-exit-active {
-    opacity: 0; /* 非表示にする */
-    transition: opacity 300ms ease-in-out; /* 300msで滑らかに非表示 */
+    opacity: 1; /* 非表示にする */
+    transition: opacity 3000ms ease-in-out; /* 300msで滑らかに非表示 */
 }
 
 /* ReactModalのオーバーレイが開いた後のモーダルおよびオーバーレイのスタイル */
@@ -83,5 +90,24 @@
 .ReactModal__Overlay--before-close .modal,
 .ReactModal__Overlay--before-close .modal-overlay {
     opacity: 0; /* 非表示にする */
-    transform: translateY(-20px); /* 少し上にずらして非表示 */
+    transform: translateY(-100px); /* 少し上にずらして非表示 */
 }
+
+.formGroup {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .submitButton, .cancelButton {
+    background-color: #ccc; /* ボタンをグレーに */
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1em;
+  }
+  
+  .submitButton:hover, .cancelButton:hover {
+    background-color: #bbb; /* ホバー時の色を少し暗く */
+  }
