@@ -94,8 +94,20 @@
 }
 
 .formGroup {
+    display: flex;
+    align-items: center; /* ラベルと入力ボックスを縦軸で中央揃え */
     padding: 10px;
     margin-bottom: 10px;
+  }
+  
+  .formGroup label {
+    width: 150px; /* ラベルの固定幅を指定して、入力ボックスとの位置を揃える */
+    text-align: right; /* ラベルを右揃えにして、テキストボックスに近づける */
+    margin-right: 10px; /* ラベルと入力ボックスの間に余白を設ける */
+  }
+  
+  .formGroup input, .formGroup textarea {
+    flex: 1; /* 入力ボックスを残りのスペースいっぱいに広げる */
   }
   
   .submitButton, .cancelButton {
@@ -110,4 +122,10 @@
   
   .submitButton:hover, .cancelButton:hover {
     background-color: #bbb; /* ホバー時の色を少し暗く */
+  }
+  .formGroup input[type="checkbox"] {
+    width: 20px; /* 拡大前のサイズ調整 */
+    height: 20px; /* 拡大前のサイズ調整 */
+    transform: scale(1.5); /* チェックボックスを1.5倍に拡大 */
+    margin-right: 10px; /* ラベルとの間に余白を追加 */
   }

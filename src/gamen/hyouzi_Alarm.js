@@ -14,7 +14,8 @@ function AlarmList() {
     alarmName: '',
     description: '',
     windowName: '',
-    thresholdTime: 0,
+    thresholdTimeHours: 0,  // 時間の初期値
+    thresholdTimeMinutes: 0,  // 分の初期値
     isEnabled: true,
   });
 
@@ -46,7 +47,8 @@ function AlarmList() {
       alarmName: '',
       description: '',
       windowName: '',
-      thresholdTime: 0,
+      thresholdTimeHours: 0,  // 時間をリセット
+      thresholdTimeMinutes: 0,  // 分をリセット
       isEnabled: true,
     });
   };
@@ -59,10 +61,22 @@ function AlarmList() {
     }));
   };
 
+  // 新規アラームの保存処理
   const handleNewAlarmSubmit = (e) => {
     e.preventDefault();
-    window.electron.ipcRenderer.send('add-alarm', newAlarmData);
-    handleNewAlarmModalClose();
+
+    // 時間と分を秒に変換
+    const totalSeconds =
+      (parseInt(newAlarmData.thresholdTimeHours, 10) || 0) * 3600 +
+      (parseInt(newAlarmData.thresholdTimeMinutes, 10) || 0) * 60;
+
+    // 秒単位の閾値を設定してデータを送信
+    window.electron.ipcRenderer.send('add-alarm', {
+      ...newAlarmData,
+      thresholdTime: totalSeconds,
+    });
+
+    handleNewAlarmModalClose(); // モーダルを閉じる
   };
 
   const handleModalClose = () => {
@@ -84,24 +98,12 @@ function AlarmList() {
       <h2>アラーム設定リスト</h2>
       <button onClick={handleNewAlarmClick}>新規</button>
 
-      <ul>
-        {alarms.map((alarm, index) => (
-          <li key={index} onClick={() => handleAlarmClick(alarm)}>
-            <div>
-              <strong>ウィンドウ名:</strong> {alarm.windowName}
-            </div>
-            <div>
-              <strong>閾値時間:</strong> {alarm.thresholdTime} 分
-            </div>
-          </li>
-        ))}
-      </ul>
-
       {/* 新規アラーム登録モーダル */}
       <NewAlarmModal
         isNewAlarmModalOpen={isNewAlarmModalOpen}
         handleNewAlarmModalClose={handleNewAlarmModalClose}
         newAlarmData={newAlarmData}
+        setNewAlarmData={setNewAlarmData} 
         handleNewAlarmChange={handleNewAlarmChange}
         handleNewAlarmSubmit={handleNewAlarmSubmit}
       />
