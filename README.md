@@ -1,3 +1,7 @@
+# ダウンロードはこちらから
+https://github.com/fukashin/saikounoaibou_react/releases
+
+
 ### バージョン0.1
 reactプロジェクト作成
 
